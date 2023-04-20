@@ -1,16 +1,22 @@
 import React, { useContext } from "react";
+
 import { Button, Container, Flex } from "@mantine/core";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import { Navbar } from "../component/navbar.jsx";
 import "../../styles/menu.css";
 
+
+
+
 export const Menu = () => {
-  const { store, context } = useContext(Context);
+  const { store, actions } = useContext(Context);
+
 
   return (
     <>
       <Navbar />
+
       <Container className="menu-cover">
         <Flex
           className="menu-post-display one col-12  my-4 "
@@ -64,6 +70,7 @@ export const Menu = () => {
           </p>
         </Flex>
       </Container>
+
     </>
   );
 };
