@@ -2,8 +2,12 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
+
+import { Flex, Button, Container, Title } from "@mantine/core";
+import { Navbar } from "../component/navbar.jsx";
+
 import home from "../../styles/home.css";
-import { Button, Container, Flex, Text, Title } from "@mantine/core";
+
 import logo from "../../img/logo.jpg";
 import { Link } from "react-router-dom";
 
@@ -14,7 +18,9 @@ export const Home = () => {
     <>
       <Container bg="gray">
         <Flex>
+
           <img className="logo" width="100px" height="100px" src={logo}></img>
+
         </Flex>
       </Container>
       <Container className="cover">

@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { MantineProvider } from "@mantine/core";
 import { Home } from "./pages/home.jsx";
-import { Menu } from "./pages/Menu.jsx";
+import { Menu } from "./pages/menu.jsx";
 import injectContext from "./store/appContext";
 
 //create your first component

@@ -5,11 +5,13 @@ Build web applications using React.js for the front end and python/flask for you
 - Documentation can be found here: https://start.4geeksacademy.com/starters/react-flask
 - Here is a video on [how to use this template](https://www.loom.com/share/f37c6838b3f1496c95111e515e83dd9b)
 - Integrated with Pipenv for package managing.
-- Fast deloyment to heroku [in just a few steps here](https://start.4geeksacademy.com/backend/deploy-heroku-posgres).
+- Fast deployment to heroku [in just a few steps here](https://start.4geeksacademy.com/backend/deploy-heroku-posgres).
 - Use of .env file.
 - SQLAlchemy integration for database abstraction.
 
-### Manual Installation:
+### 1) Installation:
+
+> If you use Github Codespaces (recommended) or Gitpod this template will already come with Python, Node and the Posgres Database installed. If you are working locally make sure to install Python 3.10, Node 
 
 It is recomended to install the backend first, make sure you have Python 3.8, Pipenv and a database engine (Posgress recomended)
 
