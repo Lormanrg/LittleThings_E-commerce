@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import logo from "../../img/logo.jpg";
 import "../../styles/content.css";
 import { Activity } from "tabler-icons-react";
+
 export const Navbar = () => {
   const { store, context } = useContext(Context);
 
@@ -12,6 +13,7 @@ export const Navbar = () => {
     <>
       {" "}
       <Container
+        fluid="true"
         className="content"
         bg="gray"
         display="flex"

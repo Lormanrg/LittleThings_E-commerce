@@ -1,26 +1,18 @@
-.menu-post-display {
-  border-radius: 10px;
+.shirts {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 300px;
+  height: 300px;
+}
+.menu-cover {
+  width: 400px;
 }
 
-.menu-post-display.one {
-  padding: 300px;
-  background-position: center;
-  background-size: cover;
+.button {
+  margin-bottom: 20px;
+}
 
-  background-image: url(https://i.pinimg.com/564x/89/39/ad/8939adee8bf9d55693673098caaa9dfe.jpg);
-}
-.menu-post-display.two {
-  padding: 300px;
-  background-position: center;
-  background-size: cover;
-  background-image: url(https://i.pinimg.com/564x/2d/b2/30/2db230d57919879eb3c3069030eb64f4.jpg);
-}
-.menu-post-display.three {
-  padding: 300px;
-  background-position: center;
-  background-size: cover;
-  background-image: url(https://i.pinimg.com/564x/75/cf/22/75cf22c70d7313bba2105bf0313c4085.jpg);
-}
-.menu-post-display.three p {
-  color: white;
+.div {
+  border-radius: 20px;
 }
