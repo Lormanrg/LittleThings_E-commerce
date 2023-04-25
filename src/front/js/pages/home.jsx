@@ -18,9 +18,7 @@ export const Home = () => {
     <>
       <Container bg="gray">
         <Flex>
-
           <img className="logo" width="100px" height="100px" src={logo}></img>
-
         </Flex>
       </Container>
       <Container className="cover">
