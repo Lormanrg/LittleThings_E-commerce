@@ -32,7 +32,7 @@ def getuserby_id(user_id=None):
         else:
             return jsonify(user_id.serialize()), 200
 
-@api.route('/register', method=['POST'])
+@api.route('/register', methods=['POST'])
 def register():
     if request.method == 'POST':
         body = request.json
