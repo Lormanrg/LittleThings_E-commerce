@@ -33,7 +33,9 @@ export const Navbar = () => {
           direction="row"
           wrap="wrap"
         >
-          <Button color="blue">Register</Button>
+          <Link to="/register">
+            <Button color="blue">Register</Button>
+          </Link>
           <Button color="teal">Login</Button>
           <Menu trigger="hover" openDelay={100} closeDelay={400}>
             <Menu.Target>
@@ -45,8 +47,12 @@ export const Navbar = () => {
               <Link to="/t-shirts">
                 <Menu.Item icon={<Activity size={14} />}>T-shirts</Menu.Item>
               </Link>
-              <Menu.Item icon={<Activity size={14} />}>Perfumes</Menu.Item>
-              <Menu.Item icon={<Activity size={14} />}>Accesorios</Menu.Item>
+              <Link to="/perfumes">
+                <Menu.Item icon={<Activity size={14} />}>Perfumes</Menu.Item>
+              </Link>
+              <Link to="/accesorios">
+                <Menu.Item icon={<Activity size={14} />}>Accesorios</Menu.Item>
+              </Link>
             </Menu.Dropdown>
           </Menu>
           <Button color="gray">Carrito de compras</Button>

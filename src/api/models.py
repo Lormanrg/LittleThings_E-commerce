@@ -24,6 +24,8 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
+            "username": self.username,
+
             # do not serialize the password, its a security breach
         }
     
@@ -36,18 +38,54 @@ class Cart(db.Model):
     tshirts_id= db.Column(db.Integer, ForeignKey("tshirts.id"))
     categories = db.Column("categories",Enum(Categories))
 
+    def serialize(self):
+        return {
+            "id": self.id,
+            "categories": self.categories,
+           
+            # do not serialize the password, its a security breach
+        }
+
 class Perfumes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=False, nullable=False)
     price = db.Column(db.String(100), unique=False, nullable=False)
 
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "price":self.price
+           
+            # do not serialize the password, its a security breach
+        }
+
 class Accesorios(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=False, nullable=False)
     price = db.Column(db.String(100), unique=False, nullable=False)
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "price":self.price
+           
+            # do not serialize the password, its a security breach
+        }
     
 class Tshirts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=False, nullable=False)
     price = db.Column(db.String(100), unique=False, nullable=False)
     size = db.Column(db.String(100), unique=False, nullable=False)
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "price":self.price,
+            "size":self.size
+           
+            # do not serialize the password, its a security breach
+        }
