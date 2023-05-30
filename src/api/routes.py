@@ -13,6 +13,9 @@ api = Blueprint('api', __name__)
 def set_password(password, salt):
     return generate_password_hash(f'{password}{salt}')
 
+def check_password(hash_password, password, salt):
+    return check_password_hash(hash_password, f'{password}{salt}')
+
 
 @api.route('/user', methods=['GET'])
 def getUser():
@@ -59,7 +62,8 @@ def register():
                 db.session.rollback()
                 return jsonify({'Message':f'error:{error.args}'}), 500
             
-
+@api.route('/login', methods=['POST'])
+def 
 
 
         

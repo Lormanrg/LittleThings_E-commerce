@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import {
   Code,
@@ -13,16 +13,19 @@ import {
   Text,
   Box,
   Checkbox,
+  Title,
 } from "@mantine/core";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useForm } from "@mantine/form";
 
 const Register = () => {
+  const { actions } = useContext(Context);
   const form = useForm({
     initialValues: {
+      username: "",
       email: "",
-      termsOfService: false,
+      password: "",
     },
 
     validate: {
@@ -31,10 +34,18 @@ const Register = () => {
       password: (value) => (value.trim() !== "" ? null : "Invalid password"),
     },
   });
+
+  const handlesubmit = (values) => {
+    actions.register(values);
+  };
+
   return (
     <>
-      <Box maw={400} mx="auto">
-        <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <Title align="center" italic>
+        Inicie su registro completando el siguiente formulario!
+      </Title>
+      <Box maw={400} mx="auto" mt="md">
+        <form onSubmit={form.onSubmit((values) => handlesubmit(values))}>
           <TextInput
             withAsterisk
             label="Username"
@@ -54,12 +65,6 @@ const Register = () => {
             label="Password"
             placeholder="Password"
             {...form.getInputProps("password")}
-          />
-
-          <Checkbox
-            mt="md"
-            label="I agree to sell my privacy"
-            {...form.getInputProps("termsOfService", { type: "checkbox" })}
           />
 
           <Group position="right" mt="md">
