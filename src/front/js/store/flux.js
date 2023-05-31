@@ -1,6 +1,8 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
-    store: {},
+    store: {
+      token: null,
+    },
     actions: {
       register: async (data) => {
         try {
@@ -24,6 +26,33 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.log(error);
         }
+      },
+      logIn: async (data) => {
+        const opts = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        };
+        try {
+          const resp = await fetch(`${process.env.BACKEND_URL}/api/register`);
+          if (!resp.ok) {
+            getActions().alertmessage("Credenciales Invalidas");
+            return false;
+          }
+          const data = await resp.json();
+          setStore({ token: data.token });
+
+          localStorage.setItem("token", data.token);
+          setStore({ message: null });
+          return true;
+        } catch (error) {
+          console.log("Ha habido un error en el login");
+        }
+      },
+      alertmessage: (message) => {
+        setStore({ message: `${message}` });
       },
     },
   };

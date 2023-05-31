@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { MantineProvider } from "@mantine/core";
 import { Home } from "./pages/home.jsx";
 import { Menu } from "./pages/menu.jsx";
+import { Navbar } from "./component/navbar.jsx";
+import { Login } from "./pages/login.jsx";
 import injectContext from "./store/appContext";
 import Register from "./component/Register.jsx";
 
@@ -16,11 +18,12 @@ const Layout = () => {
     <div>
       <MantineProvider withGlobalStyles withNormalizeCSS>
         <BrowserRouter basename={basename}>
+          <Navbar />
           <Routes>
             <Route element={<Home />} path="/" />
             <Route element={<Menu />} path="/menu" />
             <Route element={<Register />} path="/Register" />
-
+            <Route element={<Login />} path="/login" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
         </BrowserRouter>

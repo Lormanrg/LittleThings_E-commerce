@@ -4,7 +4,6 @@ import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 
 import { Flex, Button, Container, Title } from "@mantine/core";
-import { Navbar } from "../component/navbar.jsx";
 
 import home from "../../styles/home.css";
 
