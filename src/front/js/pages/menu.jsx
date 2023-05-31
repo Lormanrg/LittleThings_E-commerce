@@ -19,8 +19,6 @@ export const Menu = () => {
 
   return (
     <>
-      <Navbar />
-
       {categories.item.map((data) => (
         <Container className="menu-cover" key={data.id}>
           <Flex

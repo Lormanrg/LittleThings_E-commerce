@@ -1,36 +1,28 @@
-import React, { useContext } from "react";
-import { Context } from "../store/appContext";
-import { TextInput, Group, Button, Box, Title } from "@mantine/core";
-import "../../styles/register.css";
+import React from "react";
+import { Box, PasswordInput, Button, Group, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 
-const Register = () => {
-  const { actions } = useContext(Context);
+export const Login = () => {
   const form = useForm({
     initialValues: {
       username: "",
       email: "",
       password: "",
+      confirmPassword: "",
     },
 
     validate: {
       username: (value) => (value.trim() !== "" ? null : "Invalid username"),
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-      password: (value) => (value.trim() !== "" ? null : "Invalid password"),
+      confirmPassword: (value, values) =>
+        value !== values.password ? "Passwords did not match" : null,
     },
   });
-
-  const handlesubmit = (values) => {
-    actions.register(values);
-  };
 
   return (
     <>
       <Box mx="auto" className="register">
-        <form onSubmit={form.onSubmit((values) => handlesubmit(values))}>
-          <Title align="center" italic>
-            Inicie su registro completando el siguiente formulario!
-          </Title>
+        <form onSubmit={form.onSubmit((values) => console.log(values))}>
           <TextInput
             withAsterisk
             label="Username"
@@ -45,20 +37,24 @@ const Register = () => {
             {...form.getInputProps("email")}
           />
 
-          <TextInput
-            withAsterisk
+          <PasswordInput
             label="Password"
             placeholder="Password"
             {...form.getInputProps("password")}
           />
 
+          <PasswordInput
+            mt="sm"
+            label="Confirm password"
+            placeholder="Confirm password"
+            {...form.getInputProps("confirmPassword")}
+          />
+
           <Group position="right" mt="md">
-            <Button type="submit">Submit</Button>
+            <Button type="submit">Ingresar</Button>
           </Group>
         </form>
       </Box>
     </>
   );
 };
-
-export default Register;

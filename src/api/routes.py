@@ -63,7 +63,27 @@ def register():
                 return jsonify({'Message':f'error:{error.args}'}), 500
             
 @api.route('/login', methods=['POST'])
-def 
+def handle_login():
+    if request.method == 'POST':
+        body = request.json
+        username = body.get('username', None)
+        email = body.get ('email', None)
+        password = body.get('password', None)
+
+        if username is None or email is None or password is None:
+            return jsonify ("Debe proporcionar usuario, email y clave para completar su registro")
+        else:
+            login = User.query.filter_by(email=email).one_or_none()
+
+            if login is None:
+                return jsonify({"Mensaje":"Email no existe"}),400
+            else:
+                if check_password(login.password, password, login.salt):
+                    token = create_access_token(identity=login.id)
+                    return jsonify ({"token": token}), 201
+                else:
+                    return jsonify ({"Mensaje":"Email no existe"}), 400
+
 
 
         
