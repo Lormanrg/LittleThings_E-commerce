@@ -4,6 +4,11 @@ const getState = ({ getStore, getActions, setStore }) => {
       token: null,
     },
     actions: {
+      syncTokenFromSessionStore: () => {
+        const token = localStorage.getItem("token");
+        if (token && token != "" && token != undefined)
+          setStore({ token: token });
+      },
       register: async (data) => {
         try {
           const response = await fetch(
@@ -36,7 +41,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           body: JSON.stringify(data),
         };
         try {
-          const resp = await fetch(`${process.env.BACKEND_URL}/api/register`);
+          const resp = await fetch(`${process.env.BACKEND_URL}/api/login`);
           if (!resp.ok) {
             getActions().alertmessage("Credenciales Invalidas");
             return false;
@@ -48,7 +53,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({ message: null });
           return true;
         } catch (error) {
-          console.log("Ha habido un error en el login");
+          console.error("Ha habido un error en el login");
         }
       },
       alertmessage: (message) => {

@@ -82,7 +82,7 @@ def handle_login():
                     token = create_access_token(identity=login.id)
                     return jsonify ({"token": token}), 201
                 else:
-                    return jsonify ({"Mensaje":"Email no existe"}), 400
+                    return jsonify ({"Mensaje":"Email no existe"}),400
 
 
 

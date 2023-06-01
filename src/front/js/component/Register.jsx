@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import { TextInput, Group, Button, Box, Title } from "@mantine/core";
 import "../../styles/register.css";
 import { useForm } from "@mantine/form";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const { actions } = useContext(Context);
