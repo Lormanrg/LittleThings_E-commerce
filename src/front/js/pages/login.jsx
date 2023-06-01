@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Box, PasswordInput, Button, Group, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 export const Login = () => {
+  const { actions } = useContext(Context);
   const form = useForm({
     initialValues: {
       username: "",
@@ -19,6 +22,13 @@ export const Login = () => {
     },
   });
 
+  const handleClick = async (values) => {
+    let response = await actions.logIn(values);
+    console.log(response);
+    if (response) {
+      navigate("/home");
+    }
+  };
   return (
     <>
       <Box mx="auto" className="register">
@@ -51,7 +61,9 @@ export const Login = () => {
           />
 
           <Group position="right" mt="md">
-            <Button type="submit">Ingresar</Button>
+            <Button type="submit" onClick={() => handleClick()}>
+              Ingresar
+            </Button>
           </Group>
         </form>
       </Box>
