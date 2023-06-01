@@ -6,33 +6,32 @@ import { Context } from "../store/appContext";
 
 export const Login = () => {
   const { actions } = useContext(Context);
+  const navigate = useNavigate();
   const form = useForm({
     initialValues: {
       username: "",
       email: "",
       password: "",
-      confirmPassword: "",
     },
 
     validate: {
       username: (value) => (value.trim() !== "" ? null : "Invalid username"),
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-      confirmPassword: (value, values) =>
-        value !== values.password ? "Passwords did not match" : null,
+      password: (value) => (value.trim() !== "" ? null : "Invalid password"),
     },
   });
 
-  const handleClick = async (values) => {
-    let response = await actions.logIn(values);
+  const handlesubmit = async (data) => {
+    let response = await actions.logIn(data);
     console.log(response);
     if (response) {
-      navigate("/home");
+      navigate("/");
     }
   };
   return (
     <>
       <Box mx="auto" className="register">
-        <form onSubmit={form.onSubmit((values) => console.log(values))}>
+        <form onSubmit={form.onSubmit((values) => handlesubmit(values))}>
           <TextInput
             withAsterisk
             label="Username"
@@ -53,17 +52,8 @@ export const Login = () => {
             {...form.getInputProps("password")}
           />
 
-          <PasswordInput
-            mt="sm"
-            label="Confirm password"
-            placeholder="Confirm password"
-            {...form.getInputProps("confirmPassword")}
-          />
-
           <Group position="right" mt="md">
-            <Button type="submit" onClick={() => handleClick()}>
-              Ingresar
-            </Button>
+            <Button type="submit">Ingresar</Button>
           </Group>
         </form>
       </Box>

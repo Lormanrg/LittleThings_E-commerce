@@ -15,11 +15,6 @@ export const Home = () => {
 
   return (
     <>
-      <Container bg="gray">
-        <Flex>
-          <img className="logo" width="100px" height="100px" src={logo}></img>
-        </Flex>
-      </Container>
       <Container className="cover">
         <Flex bg="gray">
           <img className="logo" width="200px" height="200px" src={logo}></img>
