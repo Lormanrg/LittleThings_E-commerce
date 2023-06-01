@@ -33,6 +33,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
       logIn: async (data) => {
+        console.log(data);
         const opts = {
           method: "POST",
           headers: {
@@ -41,7 +42,10 @@ const getState = ({ getStore, getActions, setStore }) => {
           body: JSON.stringify(data),
         };
         try {
-          const resp = await fetch(`${process.env.BACKEND_URL}/api/login`);
+          const resp = await fetch(
+            `${process.env.BACKEND_URL}/api/login`,
+            opts
+          );
           if (!resp.ok) {
             getActions().alertmessage("Credenciales Invalidas");
             return false;
