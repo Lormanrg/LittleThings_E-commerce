@@ -4,9 +4,11 @@ import { TextInput, Group, Button, Box, Title } from "@mantine/core";
 import "../../styles/register.css";
 import { useForm } from "@mantine/form";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
 const Register = () => {
   const { actions } = useContext(Context);
+  const navigate = useNavigate();
   const form = useForm({
     initialValues: {
       username: "",
@@ -21,12 +23,19 @@ const Register = () => {
     },
   });
 
-  const handlesubmit = (values) => {
-    actions.register(values);
+  const handlesubmit = async (values) => {
+    const response = await actions.register(values);
+    if (response) {
+      actions.modifymessage("Registro Exitoso", true);
+      navigate("/login");
+    } else {
+      actions.modifymessage("Credenciales invalidas", false);
+    }
   };
 
   return (
     <>
+      <Toaster />
       <Box mx="auto" className="register">
         <form onSubmit={form.onSubmit((values) => handlesubmit(values))}>
           <Title align="center" italic>

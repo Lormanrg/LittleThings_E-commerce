@@ -1,15 +1,24 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Button, Flex, Container, Menu, Text } from "@mantine/core";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../../img/logo.jpg";
 import "../../styles/content.css";
 import { Activity } from "tabler-icons-react";
+import toast, { Toaster } from "react-hot-toast";
 
 export const Navbar = () => {
-  const { store, context } = useContext(Context);
+  const { store, context, actions } = useContext(Context);
   const location = useLocation();
 
+  useEffect(() => {
+    if (store.message.text === "") return;
+    if (store.message.type) {
+      toast.success(store.message.text);
+    } else {
+      toast.error(store.message.text);
+    }
+  }, [store.message]);
   return (
     <>
       {" "}
