@@ -2,8 +2,12 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       token: null,
+      message: { text: "", type: null },
     },
     actions: {
+      modifymessage: (text, type) => {
+        setStore({ message: { text: text, type: type } });
+      },
       syncTokenFromSessionStore: () => {
         const token = localStorage.getItem("token");
         if (token && token != "" && token != undefined)
