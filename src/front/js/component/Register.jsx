@@ -35,7 +35,6 @@ const Register = () => {
 
   return (
     <>
-      <Toaster />
       <Box mx="auto" className="register">
         <form onSubmit={form.onSubmit((values) => handlesubmit(values))}>
           <Title align="center" italic>

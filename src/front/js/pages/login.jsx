@@ -25,7 +25,7 @@ export const Login = () => {
     let response = await actions.logIn(data);
     console.log(response);
     if (response) {
-      navigate("/");
+      navigate("/menu");
     }
   };
   return (

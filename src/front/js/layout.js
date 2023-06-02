@@ -7,6 +7,7 @@ import { Navbar } from "./component/navbar.jsx";
 import { Login } from "./pages/login.jsx";
 import injectContext from "./store/appContext";
 import Register from "./component/Register.jsx";
+import Tshirts from "./pages/tshirts.jsx";
 
 //create your first component
 const Layout = () => {
@@ -24,6 +25,7 @@ const Layout = () => {
             <Route element={<Menu />} path="/menu" />
             <Route element={<Register />} path="/Register" />
             <Route element={<Login />} path="/login" />
+            <Route element={<Tshirts />} path="/tshirts" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
         </BrowserRouter>

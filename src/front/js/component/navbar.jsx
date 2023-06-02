@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Button, Flex, Container, Menu, Text } from "@mantine/core";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../img/logo.jpg";
 import "../../styles/content.css";
 import { Activity } from "tabler-icons-react";
@@ -10,6 +10,7 @@ import toast, { Toaster } from "react-hot-toast";
 export const Navbar = () => {
   const { store, context, actions } = useContext(Context);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (store.message.text === "") return;
@@ -19,9 +20,17 @@ export const Navbar = () => {
       toast.error(store.message.text);
     }
   }, [store.message]);
+
+  const handleLogout = () => {
+    let response = actions.logOut();
+    if (response) {
+      navigate("/tshirts");
+    }
+  };
   return (
     <>
       {" "}
+      <Toaster />
       <Container
         fluid="true"
         className="content"
@@ -57,7 +66,7 @@ export const Navbar = () => {
 
               <Menu.Dropdown>
                 <Menu.Label>Categorías</Menu.Label>
-                <Link to="/t-shirts">
+                <Link to="/tshirts">
                   <Menu.Item icon={<i className="fas fa-tshirt"></i>}>
                     T-shirts
                   </Menu.Item>
@@ -73,6 +82,9 @@ export const Navbar = () => {
               </Menu.Dropdown>
             </Menu>
             <Button color="gray">Carrito de compras</Button>
+            <Button color="red" onClick={() => handleLogout()}>
+              LogOut
+            </Button>
           </Flex>
         )}
       </Container>
