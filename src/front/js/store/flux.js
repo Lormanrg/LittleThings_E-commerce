@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       token: null,
-      message: { text: "", type: null },
+      message: { text: "", type: false },
     },
     actions: {
       modifymessage: (text, type) => {
@@ -58,7 +58,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({ token: data.token });
 
           localStorage.setItem("token", data.token);
-          setStore({ message: null });
           return true;
         } catch (error) {
           console.error("Ha habido un error en el login");
@@ -66,6 +65,11 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       alertmessage: (message) => {
         setStore({ message: `${message}` });
+      },
+      logOut: async () => {
+        localStorage.removeItem("token");
+        setStore({ token: null });
+        return true;
       },
     },
   };
