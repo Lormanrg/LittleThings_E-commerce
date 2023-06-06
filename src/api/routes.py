@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Tshirts, Perfumes, Accesorios
 from werkzeug.security import generate_password_hash, check_password_hash
 from api.utils import generate_sitemap, APIException
 from base64 import b64encode
@@ -83,6 +83,43 @@ def handle_login():
                     return jsonify ({"token": token}), 201
                 else:
                     return jsonify ({"Mensaje":"Email no existe"}),400
+                
+@api.route('/tshirts', methods=['GET'])
+def getting_tshirts():
+    if request.method == 'GET':
+        tshirts= Tshirts.query.all()
+        print (tshirts)
+        tshirts_list = []
+        for tshirt in tshirts:
+            tshirts_list.append(tshirt.serialize())
+
+        return jsonify(tshirts_list), 200
+    
+@api.route('/perfumes', methods=['GET'])
+def getting_perfumes():
+    if request.method == 'GET':
+        perfumes= Perfumes.query.all()
+        perfumes_list= []
+        for perfume in perfumes:
+            perfumes_list.append(perfume.serialize())
+
+        return jsonify(perfumes_list), 200
+    
+@api.route('/accesorios', methods=['GET'])
+def getting_accesorios():
+    if request.method == 'GET':
+        accesorios = Accesorios.query.all()
+        accesorios_list= []
+        for accesorio in accesorios:
+            accesorios_list.append(accesorio.serialize())
+
+    return jsonify(accesorios_list), 200
+
+
+
+
+
+
 
 
 
