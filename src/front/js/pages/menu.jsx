@@ -9,7 +9,7 @@ import {
   Image,
 } from "@mantine/core";
 import { Context } from "../store/appContext";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Navbar } from "../component/navbar.jsx";
 import "../../styles/menu.css";
 import categories from "../component/categories.json";
