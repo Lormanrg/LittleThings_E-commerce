@@ -19,7 +19,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(250), unique=False, nullable=False)
     salt = db.Column(db.String(250), nullable=False)
-    cart= db.relationship("Cart", backref="user", lazy=True)
+    cart= db.relationship("Cart")
     role = db.Column(db.Enum(Role), nullable=False, default ="buyer")
 
     def __repr__(self):
@@ -37,8 +37,10 @@ class User(db.Model):
     
 class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, ForeignKey("user.id"))
-    categories_id= db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    # categories_id= db.Column(db.Integer, nullable=False)
+    user = ForeignKey("User")
+    cart_item= ForeignKey("Cartitem")
     # perfumes_id= db.Column(db.Integer, ForeignKey("perfumes.id"))
     # accesorios_id= db.Column(db.Integer, ForeignKey("accesorios.id"))
     # tshirts_id= db.Column(db.Integer, ForeignKey("tshirts.id"))
@@ -48,11 +50,16 @@ class Cart(db.Model):
         return f'<Cart {self.id}'
 
     def serialize(self):
+        items=[]
+        for item in self.cart_item:
+            items.append({"id":item.id, "quantity":item.quantity, "tshirts":item.tshirts_id, "cart_id":item.cart_id})
         return {
             "user_id": self.user_id,
             "id": self.id,
-            "categories": self.categories,
-            "email": self.email
+            "cart_item": items
+            # "categories": self.categories,
+            # "email": self.email
+
 
            
             # do not serialize the password, its a security breach
@@ -118,11 +125,11 @@ class Tshirts(db.Model):
 class Cartitem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     quantity = db.Column(db.Integer, nullable=False)
-    tshirts_id = db.Column(db.Integer, ForeignKey("tshirts.id"), nullable=False)
+    tshirts_id = db.Column(db.Integer, db.ForeignKey("tshirts.id"), nullable=False)
     tshirts = db.relationship("Tshirts")
-    perfumes_id= db.Column(db.Integer, ForeignKey("perfumes.id"))
+    perfumes_id= db.Column(db.Integer, db.ForeignKey("perfumes.id"))
     perfumes =db.relationship("Perfumes")
-    accesorios_id= db.Column(db.Integer, ForeignKey("accesorios.id"))
+    accesorios_id= db.Column(db.Integer, db.ForeignKey("accesorios.id"))
     accesorios = db.relationship("Accesorios")
 
     def __repr__(self):
@@ -134,5 +141,6 @@ class Cartitem(db.Model):
             "quantity":self.quantity,
             "tshirts":self.tshirts,
             "perfumes":self.perfumes,
-            "accesorios": self.accesorios
+            "accesorios": self.accesorios,
+            "cart_id":self.cart_id
         }
