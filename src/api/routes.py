@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Tshirts, Perfumes, Accesorios
+from api.models import db, User, Tshirts, Perfumes, Accesorios, Cart
 from werkzeug.security import generate_password_hash, check_password_hash
 from api.utils import generate_sitemap, APIException
 from base64 import b64encode
@@ -25,6 +25,16 @@ def getUser():
         for user in users:
             users_list.append(user.serialize())
         return jsonify(users_list),200
+    
+
+@api.route('/cart', methods=['GET'])
+def getCart():
+    if request.method == 'GET':
+        carts = Cart.query.all()
+        carts_list = []
+        for cart in carts:
+            carts_list.append(cart.serialize())
+        return jsonify(carts_list),200
     
 @api.route('/user/<int:user_id>', methods=['GET'])
 def getuserby_id(user_id=None):

@@ -30,6 +30,7 @@ class User(db.Model):
             "id": self.id,
             "email": self.email,
             "username": self.username,
+            "cart":self.cart
 
 
             # do not serialize the password, its a security breach
@@ -39,8 +40,9 @@ class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     # categories_id= db.Column(db.Integer, nullable=False)
-    user = ForeignKey("User")
-    cart_item= ForeignKey("Cartitem")
+    user = db.relationship("User")
+    cart_item= db.relationship("Cartitem")
+  
     # perfumes_id= db.Column(db.Integer, ForeignKey("perfumes.id"))
     # accesorios_id= db.Column(db.Integer, ForeignKey("accesorios.id"))
     # tshirts_id= db.Column(db.Integer, ForeignKey("tshirts.id"))
@@ -51,8 +53,10 @@ class Cart(db.Model):
 
     def serialize(self):
         items=[]
-        for item in self.cart_item:
-            items.append({"id":item.id, "quantity":item.quantity, "tshirts":item.tshirts_id, "cart_id":item.cart_id})
+        print("serialize")
+        for item in self.cart_item: 
+            print("for")
+            items.append({"id":item.id, "quantity":item.quantity, "tshirts_id":item.tshirts_id, "perfumes_id":item.perfumes_id, "accsesorios_id":item.accesorios_id,"cart_id":item.cart_id})
         return {
             "user_id": self.user_id,
             "id": self.id,
@@ -78,7 +82,7 @@ class Perfumes(db.Model):
             "name": self.name,
             "price":self.price,
             "quantity":self.quantity,
-            "marca":self.marca
+            "marca":self.marca0
            
             # do not serialize the password, its a security breach
         }
@@ -125,7 +129,9 @@ class Tshirts(db.Model):
 class Cartitem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     quantity = db.Column(db.Integer, nullable=False)
-    tshirts_id = db.Column(db.Integer, db.ForeignKey("tshirts.id"), nullable=False)
+    cart_id = db.Column(db.Integer, db.ForeignKey("cart.id"))
+    cart= db.relationship("Cart")
+    tshirts_id = db.Column(db.Integer, db.ForeignKey("tshirts.id"))
     tshirts = db.relationship("Tshirts")
     perfumes_id= db.Column(db.Integer, db.ForeignKey("perfumes.id"))
     perfumes =db.relationship("Perfumes")
