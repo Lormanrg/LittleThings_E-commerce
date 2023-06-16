@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: b8de7c0cd60b
+Revision ID: 50232c415b7b
 Revises: 
-Create Date: 2023-06-07 21:28:56.912157
+Create Date: 2023-06-13 16:15:39.060538
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'b8de7c0cd60b'
+revision = '50232c415b7b'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,7 +24,11 @@ def upgrade():
     sa.Column('quantity', sa.Integer(), nullable=False),
     sa.Column('marca', sa.String(length=100), nullable=True),
     sa.Column('price', sa.String(length=100), nullable=False),
-    sa.PrimaryKeyConstraint('id')
+    sa.Column('accesorios_url', sa.String(length=100), nullable=False),
+    sa.Column('accesorios_id', sa.String(length=120), nullable=False),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('accesorios_id'),
+    sa.UniqueConstraint('accesorios_url')
     )
     op.create_table('perfumes',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -32,7 +36,11 @@ def upgrade():
     sa.Column('quantity', sa.Integer(), nullable=False),
     sa.Column('marca', sa.String(length=100), nullable=False),
     sa.Column('price', sa.String(length=100), nullable=False),
-    sa.PrimaryKeyConstraint('id')
+    sa.Column('perfumes_url', sa.String(length=100), nullable=False),
+    sa.Column('perfumes_id', sa.String(length=120), nullable=False),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('perfumes_id'),
+    sa.UniqueConstraint('perfumes_url')
     )
     op.create_table('tshirts',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -41,7 +49,11 @@ def upgrade():
     sa.Column('marca', sa.String(length=100), nullable=True),
     sa.Column('price', sa.String(length=100), nullable=False),
     sa.Column('size', sa.String(length=100), nullable=False),
-    sa.PrimaryKeyConstraint('id')
+    sa.Column('tshirts_url', sa.String(length=100), nullable=False),
+    sa.Column('tshirts_id', sa.String(length=120), nullable=False),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('tshirts_id'),
+    sa.UniqueConstraint('tshirts_url')
     )
     op.create_table('user',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -63,10 +75,12 @@ def upgrade():
     op.create_table('cartitem',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('quantity', sa.Integer(), nullable=False),
-    sa.Column('tshirts_id', sa.Integer(), nullable=False),
+    sa.Column('cart_id', sa.Integer(), nullable=True),
+    sa.Column('tshirts_id', sa.Integer(), nullable=True),
     sa.Column('perfumes_id', sa.Integer(), nullable=True),
     sa.Column('accesorios_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['accesorios_id'], ['accesorios.id'], ),
+    sa.ForeignKeyConstraint(['cart_id'], ['cart.id'], ),
     sa.ForeignKeyConstraint(['perfumes_id'], ['perfumes.id'], ),
     sa.ForeignKeyConstraint(['tshirts_id'], ['tshirts.id'], ),
     sa.PrimaryKeyConstraint('id')

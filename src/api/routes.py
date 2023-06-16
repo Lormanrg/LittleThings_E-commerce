@@ -8,6 +8,7 @@ from api.utils import generate_sitemap, APIException
 from base64 import b64encode
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 import os
+import cloudinary.uploader as uploader
 
 api = Blueprint('api', __name__)
 def set_password(password, salt):
@@ -28,13 +29,13 @@ def getUser():
     
 
 @api.route('/cart', methods=['GET'])
+@jwt_required()
 def getCart():
     if request.method == 'GET':
-        carts = Cart.query.all()
-        carts_list = []
-        for cart in carts:
-            carts_list.append(cart.serialize())
-        return jsonify(carts_list),200
+        user_id = get_jwt_identity() 
+        carts = Cart.query.filter_by(user_id=user_id).first()
+        print(carts)
+        return jsonify(carts.serialize()),200
     
 @api.route('/user/<int:user_id>', methods=['GET'])
 def getuserby_id(user_id=None):
@@ -124,6 +125,59 @@ def getting_accesorios():
             accesorios_list.append(accesorio.serialize())
 
     return jsonify(accesorios_list), 200
+
+@api.route('/perfumes/<int:id>', methods=['DELETE'])
+def delete_perfume(id=None):
+    if id is None:
+        return jsonify({"Message": "Perfume id is required"}), 400
+    
+    perfumes = Perfumes.query.get(id)
+
+    if perfumes is None:
+        return jsonify({"Message":"Perfume hasn't been found"}), 404
+    
+    try:
+        cloudinary_delete= uploader.destroy(perfumes.img_id)
+        print (cloudinary_delete)
+
+        if cloudinary_delete['result'] != 'ok':
+            return jsonify ({"message":"Error deleting Cloudinary"})
+        
+        db.session.delete(perfumes)
+        db.session.commit()
+        return jsonify ({"Message":"Perfumes images have been deleted successfully"}), 204
+    except Exception as error:
+        return jsonify({"error":error.args}), 500
+
+@api.route('/perfumes', methods=['POST'])
+def upload_perfumesurl():
+    if request.method== 'POST':
+        image_file= request.files['file']
+        name = request.form.get('name')
+        quantity_body = request.form.get('quantity')
+        marca_body = request.form.get('marca')
+        price_body = request.form.get('price')
+ 
+
+        if name is None:
+            return jsonify('All the fields are required'),400
+        try:
+            c_upload = uploader.upload(image_file)
+            new_perfume = Perfumes(name=name, img_url=c_upload["url"], img_id=c_upload['public_id'],quantity=quantity_body, marca=marca_body, price= price_body )
+            db.session.add(new_perfume)
+            db.session.commit()
+
+            return jsonify(new_perfume.serialize()),201
+
+        except Exception as error:
+            db.session.rollback()
+            return jsonify({"message":error.args}), 500
+        
+
+
+
+
+
 
 
 
