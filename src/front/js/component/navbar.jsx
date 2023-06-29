@@ -43,6 +43,7 @@ export const Navbar = () => {
             <img className="logo" width="100px" height="100px" src={logo}></img>
           </Flex>
         </Link>
+
         {location.pathname != "/" && (
           <Flex
             mih={50}

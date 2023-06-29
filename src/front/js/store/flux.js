@@ -2,12 +2,40 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       token: null,
+      urlBase: "http://localhost:3001/api",
       message: { text: "", type: false },
+      postperfumes: [],
+      postshirts: [],
     },
     actions: {
       modifymessage: (text, type) => {
         setStore({ message: { text: text, type: type } });
       },
+      getPerfumes: async () => {
+        try {
+          let response = await fetch(`${getStore().urlBase}/perfumes`);
+
+          let data = await response.json();
+          console.log(data);
+          setStore({
+            postperfumes: data,
+          });
+        } catch (error) {
+          console.log(`${error}error`);
+        }
+      },
+      getTshirts: async () => {
+        try {
+          let response = await fetch(`${getStore().urlBase}/tshirts`);
+          let data = await response.json();
+          setStore({
+            postshirts: data,
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
       syncTokenFromSessionStore: () => {
         const token = localStorage.getItem("token");
         if (token && token != "" && token != undefined)
