@@ -173,7 +173,12 @@ def upload_perfumesurl():
             db.session.rollback()
             return jsonify({"message":error.args}), 500
         
-
+# Crear rutas para postear tshirts y accesorios
+        
+@api.route('tshirts', methods=['POST'])
+def upload_tshirtsurl():
+    if request.method == 'POST':
+        image_file = request.files['file']
 
 
 

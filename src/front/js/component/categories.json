@@ -3,16 +3,19 @@
     {
       "id": "1",
       "name": "T-shirts",
+      "link": "/tshirts",
       "url_image": "https://i.pinimg.com/564x/89/39/ad/8939adee8bf9d55693673098caaa9dfe.jpg"
     },
     {
       "id": "2",
       "name": "Perfumes",
+      "link": "/perfumes",
       "url_image": "https://i.pinimg.com/564x/2d/b2/30/2db230d57919879eb3c3069030eb64f4.jpg"
     },
     {
       "id": "3",
       "name": "Accesorios",
+      "link": "/accesorios",
       "url_image": "https://i.pinimg.com/564x/75/cf/22/75cf22c70d7313bba2105bf0313c4085.jpg"
     }
   ]

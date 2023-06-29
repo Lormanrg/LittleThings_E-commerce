@@ -36,7 +36,7 @@ export const Menu = () => {
               {data.name} <br></br>{" "}
             </p>
             <img className="shirts" src={data.url_image}></img>
-            <Link to="/tshirts">
+            <Link to={`${data.link}`}>
               <Button color="lime" className="button">
                 Ver mas
               </Button>
