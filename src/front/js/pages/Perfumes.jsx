@@ -4,9 +4,9 @@ import ProductCard from "../component/ProductCard.jsx";
 import { Container } from "tabler-icons-react";
 import { Grid, rem } from "@mantine/core";
 
-const Perfumes = () => {
+const perfumes = () => {
   const { store, actions } = useContext(Context);
-  console.log(store.Perfumes);
+
   return (
     <>
       <Grid justify="center" span={3}>
@@ -18,4 +18,4 @@ const Perfumes = () => {
   );
 };
 
-export default Perfumes;
+export default perfumes;

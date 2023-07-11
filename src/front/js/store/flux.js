@@ -6,6 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       message: { text: "", type: false },
       postperfumes: [],
       postshirts: [],
+      postaccesorios: [],
     },
     actions: {
       modifymessage: (text, type) => {
@@ -16,7 +17,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           let response = await fetch(`${getStore().urlBase}/perfumes`);
 
           let data = await response.json();
-          console.log(data);
+
           setStore({
             postperfumes: data,
           });
@@ -26,16 +27,16 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       getTshirts: async () => {
         try {
-          let response = await fetch(`${getStore().urlBase}/tshirts`);
-          let data = await response.json();
+          let resp = await fetch(`${getStore().urlBase}/tshirts`);
+          let data = await resp.json();
+          console.log(data);
           setStore({
             postshirts: data,
           });
         } catch (error) {
-          console.log(error);
+          console.log(`${error}error`);
         }
       },
-
       syncTokenFromSessionStore: () => {
         const token = localStorage.getItem("token");
         if (token && token != "" && token != undefined)

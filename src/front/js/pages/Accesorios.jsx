@@ -1,16 +1,17 @@
 import React, { useContext } from "react";
+import { Context } from "../store/appContext";
 import ProductCard from "../component/ProductCard.jsx";
 import { Container } from "tabler-icons-react";
-import { Context } from "../store/appContext.js";
-import { Grid } from "@mantine/core";
+import { Grid, rem } from "@mantine/core";
 
-const tshirts = () => {
-  const { store, actions } = useContext(Context);
+const Accesorios = () => {
+  const { store, actions } = Context(useContext);
 
   return (
     <>
+      {" "}
       <Grid justify="center" span={3}>
-        {store.postshirts.map((data) => (
+        {store.map((data) => (
           <ProductCard key={data.id} product={data} />
         ))}
       </Grid>
@@ -18,4 +19,4 @@ const tshirts = () => {
   );
 };
 
-export default tshirts;
+export default Accesorios;
