@@ -99,7 +99,6 @@ def handle_login():
 def getting_tshirts():
     if request.method == 'GET':
         tshirts= Tshirts.query.all()
-        print (tshirts)
         tshirts_list = []
         for tshirt in tshirts:
             tshirts_list.append(tshirt.serialize())
@@ -179,6 +178,50 @@ def upload_perfumesurl():
 def upload_tshirtsurl():
     if request.method == 'POST':
         image_file = request.files['file']
+        name = request.form.get('name')
+        quantity_body= request.form.get('quantity')
+        marca_body= request.form.get('marca')
+        price_body= request.form.get('price')
+        size_body = request.form.get('size')
+
+        if name is None:
+            return jsonify('All fields are required'), 400
+        
+        try:
+            c_upload = uploader.upload(image_file)
+            new_tshirt = Tshirts(name=name, tshirts_url=c_upload["url"], tshirts_id=c_upload['public_id'], quantity=quantity_body, marca=marca_body, price= price_body, size= size_body)
+            db.session.add(new_tshirt)
+            db.session.commit()
+
+            return jsonify(new_tshirt.serialize()), 201
+        
+        except Exception as error:
+            db.session.rollback()
+            return jsonify({"message":error.args}), 500
+
+@api.route('accesorios', methods=['POST'])
+def upload_accesoriosurl():
+    if request.method== 'POST':
+        image_file = request.files['file']
+        name = request.form.get('name')
+        quantity_body = request.form.get('quantity')
+        marca_body = request.form.get('marca')
+        price_body = request.form.get('price')
+
+        if name is None:
+            return jsonify("All fields are required"), 400
+        
+        try:
+            c_upload = uploader.upload(image_file)
+            new_accesory= Accesorios(name=name, accesorios_url=c_upload['url'], accesorios_id=c_upload['public_id'], quantity= quantity_body, marca=marca_body, price=price_body)
+            db.session.add(new_accesory)
+            db.session.commit()
+
+            return jsonify(new_accesory.serialize()), 201
+        
+        except Exception as error:
+            db.session.rollback()
+            return jsonify({"message":error.args}), 400       
 
 
 

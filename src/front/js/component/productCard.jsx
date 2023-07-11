@@ -13,7 +13,7 @@ import { Context } from "../store/appContext";
 
 const ProductCard = (props) => {
   const { store, actions } = useContext(Context);
-  console.log(props);
+
   return (
     <>
       <Card w="200px" shadow="sm" padding="lg" radius="lg" withBorder>

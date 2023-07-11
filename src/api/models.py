@@ -98,7 +98,7 @@ class Accesorios(db.Model):
     quantity = db.Column(db.Integer, nullable=False)
     marca = db.Column(db.String(100), unique=False, nullable=True)
     price = db.Column(db.String(100), unique=False, nullable=False)
-    accesorios_url = db.Column(db.String(100), unique=True, nullable=False)
+    img_url = db.Column(db.String(100), unique=True, nullable=False)
     accesorios_id = db.Column(db.String(120), unique=True, nullable=False)
 
     def serialize(self):
@@ -108,7 +108,7 @@ class Accesorios(db.Model):
             "price":self.price,
             "quantity":self.quantity,
             "marca":self.marca,
-            "accesorios_url":self.accesorios_url,
+            "img_url":self.img_url,
             "accesorios_id":self.accesorios_id
 
            
@@ -122,7 +122,7 @@ class Tshirts(db.Model):
     marca = db.Column(db.String(100), unique=False, nullable=True)
     price = db.Column(db.String(100), unique=False, nullable=False)
     size = db.Column(db.String(100), unique=False, nullable=False)
-    tshirts_url = db.Column(db.String(100), unique=True, nullable=False)
+    img_url = db.Column(db.String(100), unique=True, nullable=False)
     tshirts_id = db.Column(db.String(120), unique=True, nullable=False)
 
     def serialize(self):
@@ -133,7 +133,7 @@ class Tshirts(db.Model):
             "size":self.size,
             "quantity":self.quantity,
             "marca":self.marca,
-            "tshirts_url":self.tshirts_url,
+            "img_url":self.img_url,
             "tshirts_id":self.tshirts_id
            
             # do not serialize the password, its a security breach

@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 50232c415b7b
+Revision ID: b4e861bacce6
 Revises: 
-Create Date: 2023-06-13 16:15:39.060538
+Create Date: 2023-07-04 22:39:59.566302
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '50232c415b7b'
+revision = 'b4e861bacce6'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,11 +24,11 @@ def upgrade():
     sa.Column('quantity', sa.Integer(), nullable=False),
     sa.Column('marca', sa.String(length=100), nullable=True),
     sa.Column('price', sa.String(length=100), nullable=False),
-    sa.Column('accesorios_url', sa.String(length=100), nullable=False),
+    sa.Column('img_url', sa.String(length=100), nullable=False),
     sa.Column('accesorios_id', sa.String(length=120), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('accesorios_id'),
-    sa.UniqueConstraint('accesorios_url')
+    sa.UniqueConstraint('img_url')
     )
     op.create_table('perfumes',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -36,11 +36,12 @@ def upgrade():
     sa.Column('quantity', sa.Integer(), nullable=False),
     sa.Column('marca', sa.String(length=100), nullable=False),
     sa.Column('price', sa.String(length=100), nullable=False),
-    sa.Column('perfumes_url', sa.String(length=100), nullable=False),
-    sa.Column('perfumes_id', sa.String(length=120), nullable=False),
+    sa.Column('img_url', sa.String(length=100), nullable=False),
+    sa.Column('img_id', sa.String(length=120), nullable=False),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('perfumes_id'),
-    sa.UniqueConstraint('perfumes_url')
+    sa.UniqueConstraint('img_id'),
+    sa.UniqueConstraint('img_url'),
+    sa.UniqueConstraint('name')
     )
     op.create_table('tshirts',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -49,11 +50,11 @@ def upgrade():
     sa.Column('marca', sa.String(length=100), nullable=True),
     sa.Column('price', sa.String(length=100), nullable=False),
     sa.Column('size', sa.String(length=100), nullable=False),
-    sa.Column('tshirts_url', sa.String(length=100), nullable=False),
+    sa.Column('img_url', sa.String(length=100), nullable=False),
     sa.Column('tshirts_id', sa.String(length=120), nullable=False),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('tshirts_id'),
-    sa.UniqueConstraint('tshirts_url')
+    sa.UniqueConstraint('img_url'),
+    sa.UniqueConstraint('tshirts_id')
     )
     op.create_table('user',
     sa.Column('id', sa.Integer(), nullable=False),
