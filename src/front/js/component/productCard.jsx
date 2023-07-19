@@ -8,6 +8,7 @@ import {
   Badge,
   Button,
   Flex,
+  Grid,
 } from "@mantine/core";
 import { Context } from "../store/appContext";
 
@@ -22,7 +23,7 @@ const ProductCard = (props) => {
         </Card.Section>
 
         <Group position="apart" mt="md" mb="xs">
-          <Text weight={400}>Norway Fjord Adventures</Text>
+          <Text weight={400}>{props.product.name}</Text>
           <Badge color="pink" variant="light">
             On Sale
           </Badge>

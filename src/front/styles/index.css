@@ -1,0 +1,6 @@
+.icon {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  color: rgba(56, 180, 56, 0.623);
+}

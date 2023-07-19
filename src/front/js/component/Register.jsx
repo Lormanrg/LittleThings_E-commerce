@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import { TextInput, Group, Button, Box, Title } from "@mantine/core";
-import "../../styles/register.css";
+import { TextInput, Group, Button, Box, Title, Flex } from "@mantine/core";
+import "../../styles/login.css";
 import { useForm } from "@mantine/form";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
@@ -35,10 +35,10 @@ const Register = () => {
 
   return (
     <>
-      <Box mx="auto" className="register">
+      <Box mx="auto" className="login">
         <form onSubmit={form.onSubmit((values) => handlesubmit(values))}>
           <Title align="center" italic>
-            Inicie su registro completando el siguiente formulario!
+            Registro de usuario
           </Title>
           <TextInput
             withAsterisk
