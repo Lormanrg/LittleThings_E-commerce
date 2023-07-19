@@ -1,0 +1,15 @@
+.login {
+  width: 70%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid green;
+  box-sizing: border-box;
+  border-radius: 20px;
+}
+
+form {
+  width: 30%;
+}
