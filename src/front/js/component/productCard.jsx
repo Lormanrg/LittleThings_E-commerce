@@ -17,9 +17,9 @@ const ProductCard = (props) => {
 
   return (
     <>
-      <Card w="200px" shadow="sm" padding="lg" radius="lg" withBorder>
+      <Card shadow="sm" padding="lg" radius="lg" withBorder>
         <Card.Section>
-          <Image src={props.product.img_url} alt="Norway" />
+          <Image className="image" src={props.product.img_url} alt="Norway" />
         </Card.Section>
 
         <Group position="apart" mt="md" mb="xs">

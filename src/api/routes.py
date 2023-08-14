@@ -189,7 +189,7 @@ def upload_tshirtsurl():
         
         try:
             c_upload = uploader.upload(image_file)
-            new_tshirt = Tshirts(name=name, tshirts_url=c_upload["url"], tshirts_id=c_upload['public_id'], quantity=quantity_body, marca=marca_body, price= price_body, size= size_body)
+            new_tshirt = Tshirts(name=name, img_url=c_upload["url"], tshirts_id=c_upload['public_id'], quantity=quantity_body, marca=marca_body, price= price_body, size= size_body)
             db.session.add(new_tshirt)
             db.session.commit()
 
@@ -213,7 +213,7 @@ def upload_accesoriosurl():
         
         try:
             c_upload = uploader.upload(image_file)
-            new_accesory= Accesorios(name=name, accesorios_url=c_upload['url'], accesorios_id=c_upload['public_id'], quantity= quantity_body, marca=marca_body, price=price_body)
+            new_accesory= Accesorios(name=name, img_url=c_upload['url'], accesorios_id=c_upload['public_id'], quantity= quantity_body, marca=marca_body, price=price_body)
             db.session.add(new_accesory)
             db.session.commit()
 

@@ -29,7 +29,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           let resp = await fetch(`${getStore().urlBase}/tshirts`);
           let data = await resp.json();
-          console.log(data);
+
           setStore({
             postshirts: data,
           });
@@ -37,6 +37,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(`${error}error`);
         }
       },
+      getAccesorios: async () => {},
       syncTokenFromSessionStore: () => {
         const token = localStorage.getItem("token");
         if (token && token != "" && token != undefined)

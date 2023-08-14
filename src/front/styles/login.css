@@ -1,15 +1,17 @@
 .login {
-  width: 70%;
-  height: 100vh;
+  width: 40%;
+  padding-bottom: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+
   align-items: center;
   border: 3px solid green;
   box-sizing: border-box;
   border-radius: 20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 form {
-  width: 30%;
+  width: 80%;
 }

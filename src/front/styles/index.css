@@ -4,3 +4,6 @@
   margin-top: 20px;
   color: rgba(56, 180, 56, 0.623);
 }
+.mantine-Image-image {
+  min-height: 300px;
+}
