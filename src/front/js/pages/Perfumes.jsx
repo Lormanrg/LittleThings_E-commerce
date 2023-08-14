@@ -18,6 +18,7 @@ const perfumes = () => {
           { maxWidth: "xs", cols: 1, spacing: "sm" },
         ]}
         mt={20}
+        px={20}
       >
         {store.postperfumes.map((data) => (
           <ProductCard key={data.id} product={data} />

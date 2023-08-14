@@ -1,8 +1,9 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
-import { Button, Flex, Container, Menu, Text } from "@mantine/core";
+import { Button, Flex, Container, Menu, Text, Image } from "@mantine/core";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../img/logo.jpg";
+import perfume from "../../img/perfume.png";
 import "../../styles/content.css";
 import { Activity } from "tabler-icons-react";
 import toast, { Toaster } from "react-hot-toast";
@@ -73,7 +74,13 @@ export const Navbar = () => {
                   </Menu.Item>
                 </Link>
                 <Link to="/perfumes">
-                  <Menu.Item icon={<Activity size={14} />}>Perfumes</Menu.Item>
+                  <Menu.Item
+                    icon={
+                      <Image src={perfume} className="perfume" alt="Norway" />
+                    }
+                  >
+                    Perfumes
+                  </Menu.Item>
                 </Link>
                 <Link to="/accesorios">
                   <Menu.Item icon={<Activity size={14} />}>

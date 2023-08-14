@@ -4,14 +4,14 @@ import ProductCard from "../component/ProductCard.jsx";
 import { Container } from "tabler-icons-react";
 import { Grid, rem } from "@mantine/core";
 
-const Accesorios = () => {
-  const { store, actions } = Context(useContext);
+const accesorios = () => {
+  const { store, actions } = useContext(Context);
 
   return (
     <>
       {" "}
       <Grid justify="center" span={3}>
-        {store.map((data) => (
+        {store.postaccesorios.map((data) => (
           <ProductCard key={data.id} product={data} />
         ))}
       </Grid>
@@ -19,4 +19,4 @@ const Accesorios = () => {
   );
 };
 
-export default Accesorios;
+export default accesorios;
