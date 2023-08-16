@@ -30,8 +30,7 @@ const ProductCard = (props) => {
         </Group>
 
         <Text size="sm" color="dimmed">
-          With Fjord Tours you can explore more of the magical fjord landscapes
-          with tours and activities on and around the fjords of Norway
+          {props.product.details}
         </Text>
 
         <Button variant="light" color="blue" fullWidth mt="md" radius="md">

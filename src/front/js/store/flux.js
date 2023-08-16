@@ -37,7 +37,16 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(`${error}error`);
         }
       },
-      getAccesorios: async () => {},
+      getAccesorios: async () => {
+        try {
+          let resp = await fetch(`${getStore().urlBase}/accesorios`);
+          let data = await resp.json();
+
+          setStore({ postaccesorios: data });
+        } catch (error) {
+          console.log(`${error}error`);
+        }
+      },
       syncTokenFromSessionStore: () => {
         const token = localStorage.getItem("token");
         if (token && token != "" && token != undefined)
