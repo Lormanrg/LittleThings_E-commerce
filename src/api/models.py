@@ -77,6 +77,7 @@ class Perfumes(db.Model):
     price = db.Column(db.String(100), unique=False, nullable=False)
     img_url = db.Column(db.String(100), unique=True, nullable=False)
     img_id = db.Column(db.String(120), unique=True, nullable=False)
+    details = db.Column(db.String(1000), unique=False, nullable= False)
 
 
     def serialize(self):
@@ -87,7 +88,8 @@ class Perfumes(db.Model):
             "quantity":self.quantity,
             "marca":self.marca,
             "img_url":self.img_url,
-            "img_id":self.img_id
+            "img_id":self.img_id,
+            "details":self.details
            
             # do not serialize the password, its a security breach
         }
@@ -100,6 +102,7 @@ class Accesorios(db.Model):
     price = db.Column(db.String(100), unique=False, nullable=False)
     img_url = db.Column(db.String(100), unique=True, nullable=False)
     accesorios_id = db.Column(db.String(120), unique=True, nullable=False)
+    details = db.Column(db.String(1000), unique=False, nullable= False)
 
     def serialize(self):
         return {
@@ -109,7 +112,8 @@ class Accesorios(db.Model):
             "quantity":self.quantity,
             "marca":self.marca,
             "img_url":self.img_url,
-            "accesorios_id":self.accesorios_id
+            "accesorios_id":self.accesorios_id,
+            "details":self.details
 
            
             # do not serialize the password, its a security breach
@@ -124,6 +128,7 @@ class Tshirts(db.Model):
     size = db.Column(db.String(100), unique=False, nullable=False)
     img_url = db.Column(db.String(100), unique=True, nullable=False)
     tshirts_id = db.Column(db.String(120), unique=True, nullable=False)
+    details = db.Column(db.String(1000), unique=False, nullable= False)
 
     def serialize(self):
         return {
@@ -134,7 +139,8 @@ class Tshirts(db.Model):
             "quantity":self.quantity,
             "marca":self.marca,
             "img_url":self.img_url,
-            "tshirts_id":self.tshirts_id
+            "tshirts_id":self.tshirts_id,
+            "details": self.details
            
             # do not serialize the password, its a security breach
         }
@@ -150,6 +156,7 @@ class Cartitem(db.Model):
     perfumes =db.relationship("Perfumes")
     accesorios_id= db.Column(db.Integer, db.ForeignKey("accesorios.id"))
     accesorios = db.relationship("Accesorios")
+    
 
     def __repr__(self):
         return f'<Cartitem{self.id}>'
