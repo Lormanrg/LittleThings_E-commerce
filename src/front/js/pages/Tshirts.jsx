@@ -21,7 +21,7 @@ const tshirts = () => {
         px={20}
       >
         {store.postshirts.map((data) => (
-          <ProductCard key={data.id} product={data} />
+          <ProductCard key={data.id} product={data} type="tshirts" />
         ))}
       </SimpleGrid>
     </>

@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import {
   Card,
-  Link,
   Image,
   Group,
   Text,
@@ -11,10 +10,11 @@ import {
   Grid,
 } from "@mantine/core";
 import { Context } from "../store/appContext";
+import { Link } from "react-router-dom";
 
 const ProductCard = (props) => {
   const { store, actions } = useContext(Context);
-
+  console.log(props);
   return (
     <>
       <Card shadow="sm" padding="lg" radius="lg" withBorder>
@@ -32,10 +32,11 @@ const ProductCard = (props) => {
         <Text size="sm" color="dimmed">
           {props.product.details}
         </Text>
-
-        <Button variant="light" color="blue" fullWidth mt="md" radius="md">
-          Ver mas
-        </Button>
+        <Link to={`/${props.type}/${props.product.id}`}>
+          <Button variant="light" color="blue" fullWidth mt="md" radius="md">
+            Ver mas
+          </Button>
+        </Link>
       </Card>
     </>
   );

@@ -183,13 +183,14 @@ def upload_tshirtsurl():
         marca_body= request.form.get('marca')
         price_body= request.form.get('price')
         size_body = request.form.get('size')
+        details_body = request.form.get('details')
 
         if name is None:
             return jsonify('All fields are required'), 400
         
         try:
             c_upload = uploader.upload(image_file)
-            new_tshirt = Tshirts(name=name, img_url=c_upload["url"], tshirts_id=c_upload['public_id'], quantity=quantity_body, marca=marca_body, price= price_body, size= size_body)
+            new_tshirt = Tshirts(name=name, img_url=c_upload["url"], tshirts_id=c_upload['public_id'], quantity=quantity_body, marca=marca_body, price= price_body, size= size_body, details= details_body )
             db.session.add(new_tshirt)
             db.session.commit()
 
