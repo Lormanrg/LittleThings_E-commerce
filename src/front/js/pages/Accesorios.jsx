@@ -22,7 +22,7 @@ const accesorios = () => {
         px={20}
       >
         {store.postaccesorios.map((data) => (
-          <ProductCard key={data.id} product={data} />
+          <ProductCard key={data.id} product={data} type="accesorios" />
         ))}
       </SimpleGrid>
     </>
