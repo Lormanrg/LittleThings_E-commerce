@@ -71,6 +71,7 @@ class Cart(db.Model):
 
 class Perfumes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     name = db.Column(db.String(100), unique=True, nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     marca = db.Column(db.String(100), unique=False, nullable=False)
@@ -96,7 +97,8 @@ class Perfumes(db.Model):
 
 class Accesorios(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), unique=False, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    name = db.Column(db.String(100), unique=True, nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     marca = db.Column(db.String(100), unique=False, nullable=True)
     price = db.Column(db.String(100), unique=False, nullable=False)
@@ -121,7 +123,8 @@ class Accesorios(db.Model):
     
 class Tshirts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), unique=False, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    name = db.Column(db.String(100), unique=True, nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     marca = db.Column(db.String(100), unique=False, nullable=True)
     price = db.Column(db.String(100), unique=False, nullable=False)
@@ -147,6 +150,7 @@ class Tshirts(db.Model):
 
 class Cartitem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     quantity = db.Column(db.Integer, nullable=False)
     cart_id = db.Column(db.Integer, db.ForeignKey("cart.id"))
     cart= db.relationship("Cart")

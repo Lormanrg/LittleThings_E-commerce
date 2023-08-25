@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Tshirts, Perfumes, Accesorios, Cart
+from api.models import db, User, Tshirts, Perfumes, Accesorios, Cart, Cartitem
 from werkzeug.security import generate_password_hash, check_password_hash
 from api.utils import generate_sitemap, APIException
 from base64 import b64encode
@@ -156,13 +156,14 @@ def upload_perfumesurl():
         quantity_body = request.form.get('quantity')
         marca_body = request.form.get('marca')
         price_body = request.form.get('price')
+        details_body = request.form.get('details')
  
 
         if name is None:
             return jsonify('All the fields are required'),400
         try:
             c_upload = uploader.upload(image_file)
-            new_perfume = Perfumes(name=name, img_url=c_upload["url"], img_id=c_upload['public_id'],quantity=quantity_body, marca=marca_body, price= price_body )
+            new_perfume = Perfumes(name=name, img_url=c_upload["url"], img_id=c_upload['public_id'],quantity=quantity_body, marca=marca_body, price= price_body, details= details_body )
             db.session.add(new_perfume)
             db.session.commit()
 
@@ -174,7 +175,7 @@ def upload_perfumesurl():
         
 # Crear rutas para postear tshirts y accesorios
         
-@api.route('tshirts', methods=['POST'])
+@api.route('/tshirts', methods=['POST'])
 def upload_tshirtsurl():
     if request.method == 'POST':
         image_file = request.files['file']
@@ -200,7 +201,7 @@ def upload_tshirtsurl():
             db.session.rollback()
             return jsonify({"message":error.args}), 500
 
-@api.route('accesorios', methods=['POST'])
+@api.route('/accesorios', methods=['POST'])
 def upload_accesoriosurl():
     if request.method== 'POST':
         image_file = request.files['file']
@@ -208,13 +209,14 @@ def upload_accesoriosurl():
         quantity_body = request.form.get('quantity')
         marca_body = request.form.get('marca')
         price_body = request.form.get('price')
+        details_body = request.form.get('details')
 
         if name is None:
             return jsonify("All fields are required"), 400
         
         try:
             c_upload = uploader.upload(image_file)
-            new_accesory= Accesorios(name=name, img_url=c_upload['url'], accesorios_id=c_upload['public_id'], quantity= quantity_body, marca=marca_body, price=price_body)
+            new_accesory= Accesorios(name=name, img_url=c_upload['url'], accesorios_id=c_upload['public_id'], quantity= quantity_body, marca=marca_body, price=price_body, details = details_body)
             db.session.add(new_accesory)
             db.session.commit()
 
@@ -222,7 +224,35 @@ def upload_accesoriosurl():
         
         except Exception as error:
             db.session.rollback()
-            return jsonify({"message":error.args}), 400       
+            return jsonify({"message":error.args}), 400      
+        
+@api.route('/carts/<int:user_id>', methods=['GET'])
+def getting_carts(user_id=None):
+    if request.method == 'GET':
+        carts= Cart.query.filter_by(user_id=user_id).all()
+        print(carts)
+        carts_list = []
+        for cart in carts:
+            carts_list.append(cart.serialize())
+        
+        return jsonify(carts_list), 200
+    
+@api.route('/cartitem/<int:user_id>/<int:tshirts_id>', methods= ['POST'])
+def postcartitem(tshirts_id=None, user_id=None):
+    if request.method =='POST':
+        if Cartitem.query.filter_by(tshirts_id=tshirts_id, user_id=user_id).first():
+            cartitem= Cartitem.query.filter_by(tshirts_id=tshirts_id, user_id=user_id).first()
+            db.session.delete(cartitem)
+            db.session.commit()
+            return jsonify({'Message':'Tshirt has been deleted succesfully'})
+        else:
+            cartitem= Cartitem.query.filter_by(tshirts_id=tshirts_id, user_id=user_id)
+            db.session.add(cartitem)
+            db.session.commit()
+            return jsonify({'Message':'Tshirt has been added to the cart'})
+        
+
+
 
 
 
