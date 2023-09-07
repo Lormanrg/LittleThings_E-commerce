@@ -7,6 +7,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       postperfumes: [],
       postshirts: [],
       postaccesorios: [],
+      user_id: "",
+      gettingcartbyid: [],
     },
     actions: {
       modifymessage: (text, type) => {
@@ -46,6 +48,28 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.log(`${error}error`);
         }
+      },
+      addCart: (user_id) => {
+        fetch(`${getStore.urlBase}/carts/${user_id}`, {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((result) => {
+            console.log("Success", result);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+        // let carts = getStore().gettingcartbyid.some(
+        //   (user) => user.id == gettingcartbyid.id
+        // );
+        // if (!carts) {
+        //   setStore({
+        //     gettingcartbyid: [...getStore().gettingcartbyid, gettingcartbyid],
+        //   });
       },
       syncTokenFromSessionStore: () => {
         const token = localStorage.getItem("token");

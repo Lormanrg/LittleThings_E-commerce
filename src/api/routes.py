@@ -237,24 +237,82 @@ def getting_carts(user_id=None):
         
         return jsonify(carts_list), 200
     
-@api.route('/cartitem/<int:user_id>/<int:tshirts_id>', methods= ['POST'])
-def postcartitem(tshirts_id=None, user_id=None):
-    if request.method =='POST':
-        if Cartitem.query.filter_by(tshirts_id=tshirts_id, user_id=user_id).first():
-            cartitem= Cartitem.query.filter_by(tshirts_id=tshirts_id, user_id=user_id).first()
-            db.session.delete(cartitem)
+@api.route('/carts/<int:user_id>/<int:tshirts_id>', methods=['POST'])
+def addtshirtstocart(tshirts_id=None, user_id=None):
+    if request.method == 'POST':
+        if Cart.query.filter_by(tshirts_id=tshirts_id, user_id=user_id).first():
+            cart = Cart.query.filter_by(tshirts_id=tshirts_id, user_id=user_id)
+            db.session.delete(cart)
             db.session.commit()
-            return jsonify({'Message':'Tshirt has been deleted succesfully'})
+            return jsonify({'Message':'Tshirt has been deleted'}),201
         else:
-            cartitem= Cartitem.query.filter_by(tshirts_id=tshirts_id, user_id=user_id)
-            db.session.add(cartitem)
+            cart = Cart(user_id=user_id, tshirts_id= tshirts_id)
+            db.session.add(cart)
             db.session.commit()
-            return jsonify({'Message':'Tshirt has been added to the cart'})
+            return jsonify({'Message':'Tshirt has been added to user'}), 200
+
+    
+@api.route('/cartitem/tshirt/<int:tshirts_id>', methods= ['POST'])
+@jwt_required()
+def addcartitem_tshirt(tshirts_id=None, user_id=None, cart_id=None):
+    if request.method =='POST':
+        body = request.json
+        quantity = body.get('quantity', None)
+        user_id = get_jwt_identity()
+        cartitem= Cartitem.query.filter_by(tshirts_id=tshirts_id, user_id=user_id).first()
+        if cartitem is not None:
+            return jsonify({'Message':'Ya ha sido anadida'})
+        cart = Cart.query.filter_by(user_id=user_id).first()
+        new_cartitem = Cartitem(tshirts_id=tshirts_id,cart_id=cart.id, user_id=user_id,quantity= quantity)
+        db.session.add(new_cartitem)
+        db.session.commit()
+        return jsonify({'Message':'Tshirt has been added to the cart'}),200
+
+@api.route('/cartitem/perfumes/<int:perfumes_id>', methods=['POST'])
+@jwt_required()
+def addcartitem_perfume(perfumes_id=None, user_id=None, cart_id=None):
+    if request.method =='POST':
+        body= request.json
+        quantity= body.get('quantity', None)
+        user_id = get_jwt_identity()
+        cartitem= Cartitem.query.filter_by(perfumes_id=perfumes_id, user_id=user_id).first()
+        if cartitem is not None:
+            return jsonify({'Message':'Ya ha sido anadida'}),201
+        cart = Cart.query.filter_by(user_id=user_id).first()
+        new_cartitem = Cartitem(perfumes_id=perfumes_id, user_id=user_id, cart_id=cart.id, quantity=quantity)
+        db.session.add(new_cartitem)
+        db.session.commit()
+        return jsonify({'Message':'Perfume has been added to the cart'}),200
+    
+@api.route('/cartitem/accesorios/<int:accesorios_id>', methods=['POST'])
+@jwt_required()
+def addcartitem_accesorios(accesorios_id=None, user_id=None, cart_id=None):
+    if request.method == 'POST':
+        body = request.json
+        quantity = body.get('quantity', None)
+        user_id = get_jwt_identity()
+        cartitem= Cartitem.query.filter_by(accesorios_id=accesorios_id, user_id=user_id).first()
+        if cartitem is not None:
+            return jsonify({'Message':'Ya fue anadido'})
+        cart = Cart.query.filter_by(user_id=user_id).first()
+        new_cartitem= Cartitem(accesorios_id=accesorios_id, user_id=user_id, cart_id=cart.id, quantity=quantity)
+        db.session.add(new_cartitem)
+        db.session.commit()
+        return jsonify({'Message':'Accesorio has been added to the cart'}),200
         
 
 
+        
+
+# 2 rutas de accesorios y perfumes + ruta para obtener cart por usuario logueado
 
 
+        # if Cartitem.query.filter_by(tshirts_id=tshirts_id, user_id=user_id).first():
+        #     cartitem= Cartitem.query.filter_by(tshirts_id=tshirts_id, user_id=user_id).first()
+        #     db.session.delete(cartitem)
+        #     db.session.commit()
+        #     return jsonify({'Message':'Tshirt has been deleted succesfully'})
+        
 
 
 
