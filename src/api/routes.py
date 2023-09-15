@@ -40,11 +40,11 @@ def getCart():
 @api.route('/user/<int:user_id>', methods=['GET'])
 def getuserby_id(user_id=None):
     if request.method == 'GET':
-        user_id = User.query.filter_by(id=user_id).first()
-        if user_id is None:
+        user = User.query.filter_by(id=user_id).first()
+        if user is None:
             return jsonify({"Message":"There's no user with that id"}),404
         else:
-            return jsonify(user_id.serialize()), 200
+            return jsonify(user.serialize()), 200
 
 @api.route('/register', methods=['POST'])
 def register():
@@ -91,7 +91,7 @@ def handle_login():
             else:
                 if check_password(login.password, password, login.salt):
                     token = create_access_token(identity=login.id)
-                    return jsonify ({"token": token}), 201
+                    return jsonify ({"token": token, 'user_id': login.id}), 201
                 else:
                     return jsonify ({"Mensaje":"Email no existe"}),400
                 
@@ -237,19 +237,19 @@ def getting_carts(user_id=None):
         
         return jsonify(carts_list), 200
     
-@api.route('/carts/<int:user_id>/<int:tshirts_id>', methods=['POST'])
-def addtshirtstocart(tshirts_id=None, user_id=None):
-    if request.method == 'POST':
-        if Cart.query.filter_by(tshirts_id=tshirts_id, user_id=user_id).first():
-            cart = Cart.query.filter_by(tshirts_id=tshirts_id, user_id=user_id)
-            db.session.delete(cart)
-            db.session.commit()
-            return jsonify({'Message':'Tshirt has been deleted'}),201
-        else:
-            cart = Cart(user_id=user_id, tshirts_id= tshirts_id)
-            db.session.add(cart)
-            db.session.commit()
-            return jsonify({'Message':'Tshirt has been added to user'}), 200
+# @api.route('/carts/<int:user_id>/<int:tshirts_id>', methods=['POST'])
+# def addtshirtstocart(tshirts_id=None, user_id=None):
+#     if request.method == 'POST':
+#         if Cart.query.filter_by(tshirts_id=tshirts_id, user_id=user_id).first():
+#             cart = Cart.query.filter_by(tshirts_id=tshirts_id, user_id=user_id)
+#             db.session.delete(cart)
+#             db.session.commit()
+#             return jsonify({'Message':'Tshirt has been deleted'}),201
+#         else:
+#             cart = Cart(user_id=user_id, tshirts_id= tshirts_id)
+#             db.session.add(cart)
+#             db.session.commit()
+#             return jsonify({'Message':'Tshirt has been added to the cart'}), 200
 
     
 @api.route('/cartitem/tshirt/<int:tshirts_id>', methods= ['POST'])

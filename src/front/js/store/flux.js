@@ -7,8 +7,10 @@ const getState = ({ getStore, getActions, setStore }) => {
       postperfumes: [],
       postshirts: [],
       postaccesorios: [],
-      user_id: "",
+      user_id: localStorage.getItem("user_id") || "",
       gettingcartbyid: [],
+      userData: [],
+      carts: [],
     },
     actions: {
       modifymessage: (text, type) => {
@@ -49,27 +51,26 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(`${error}error`);
         }
       },
-      addCart: (user_id) => {
-        fetch(`${getStore.urlBase}/carts/${user_id}`, {
-          method: "POST",
+      getCart: (user_id) => {
+        fetch(`${getStore().urlBase}/carts/${user_id}`, {
+          method: "GET",
           headers: {
             "Content-type": "application/json",
           },
         })
           .then((response) => response.json())
           .then((result) => {
-            console.log("Success", result);
+            setStore({ gettingcartbyid: result });
           })
           .catch((error) => {
             console.error("Error:", error);
           });
-        // let carts = getStore().gettingcartbyid.some(
-        //   (user) => user.id == gettingcartbyid.id
-        // );
-        // if (!carts) {
-        //   setStore({
-        //     gettingcartbyid: [...getStore().gettingcartbyid, gettingcartbyid],
-        //   });
+      },
+      addCart: (carts) => {
+        let cart = getStore().carts.some((item) => item.id == carts.id);
+        if (!cart) {
+          setStore({ carts: [...getStore().carts, carts] });
+        }
       },
       syncTokenFromSessionStore: () => {
         const token = localStorage.getItem("token");
@@ -99,14 +100,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(error);
         }
       },
-      logIn: async (data) => {
-        console.log(data);
+      logIn: async (email, password) => {
         const opts = {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(data),
+          body: JSON.stringify(email, password),
         };
         try {
           const resp = await fetch(
@@ -117,13 +117,17 @@ const getState = ({ getStore, getActions, setStore }) => {
             getActions().alertmessage("Credenciales Invalidas");
             return false;
           }
-          const data = await resp.json();
-          setStore({ token: data.token });
-
+          let data = await resp.json();
           localStorage.setItem("token", data.token);
+          setStore({ token: data.token });
+          localStorage.setItem("user_id", data.user_id);
+          setStore({ user_id: data.user_id });
+
+          getActions().getUser(data.user_id);
+
           return true;
         } catch (error) {
-          console.error("Ha habido un error en el login");
+          console.log("Ha habido un error en el login", error);
         }
       },
       alertmessage: (message) => {
@@ -132,7 +136,19 @@ const getState = ({ getStore, getActions, setStore }) => {
       logOut: async () => {
         localStorage.removeItem("token");
         setStore({ token: null });
+        localStorage.removeItem("user_id");
+        setStore({ user_id: "", gettingcartbyid: "" });
         return true;
+      },
+      getUser: async (user_id) => {
+        try {
+          let response = await fetch(`${getStore().urlBase}/user/${user_id}`);
+          let data = await response.json();
+
+          setStore({ userData: data });
+        } catch (error) {
+          console.log(error);
+        }
       },
     },
   };

@@ -10,8 +10,7 @@ import Register from "./component/Register.jsx";
 import Tshirts from "./pages/Tshirts.jsx";
 import Perfumes from "./pages/Perfumes.jsx";
 import Accesorios from "./pages/Accesorios.jsx";
-import { Tshirtsdetails } from "./pages/Tshirtsdetails.jsx";
-import { Accesoriosdetails } from "./pages/Accesoriosdetails.jsx";
+import { ProductDetails } from "./pages/ProductDetails.jsx";
 
 //create your first component
 const Layout = () => {
@@ -33,8 +32,7 @@ const Layout = () => {
             <Route element={<Perfumes />} path="/perfumes" />
             <Route element={<Accesorios />} path="/accesorios" />
             <Route element={<h1>Not found!</h1>} />
-            <Route element={<Tshirtsdetails />} path="/:type/:id" />
-            <Route element={<Accesoriosdetails />} path="/:type/:id" />
+            <Route element={<ProductDetails />} path="/:type/:id" />
           </Routes>
         </BrowserRouter>
       </MantineProvider>
