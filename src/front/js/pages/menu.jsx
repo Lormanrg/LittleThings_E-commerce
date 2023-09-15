@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 import {
   BackgroundImage,
@@ -16,7 +16,11 @@ import categories from "../component/categories.json";
 
 export const Menu = () => {
   const { store, actions } = useContext(Context);
-
+  useEffect(() => {
+    if (store.user_id != "") {
+      actions.getCart(store.user_id);
+    }
+  }, [store.user_id]);
   return (
     <>
       {categories.item.map((data) => (

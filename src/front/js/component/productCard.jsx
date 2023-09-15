@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 
 const ProductCard = (props) => {
   const { store, actions } = useContext(Context);
-  console.log(props);
+
   return (
     <>
       <Card shadow="sm" padding="lg" radius="lg" withBorder>
@@ -37,6 +37,18 @@ const ProductCard = (props) => {
             Ver mas
           </Button>
         </Link>
+        <Button
+          variant="light"
+          color="blue"
+          fullWidth
+          mt="md"
+          radius="md"
+          onClick={() => {
+            actions.addCart(props.product);
+          }}
+        >
+          Agregar al carrito
+        </Button>
       </Card>
     </>
   );
