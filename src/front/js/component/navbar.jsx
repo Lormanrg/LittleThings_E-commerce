@@ -99,7 +99,6 @@ export const Navbar = () => {
               direction="row"
               wrap="wrap"
             >
-              {" "}
               <Modal opened={opened} onClose={close} withCloseButton={false}>
                 Modal without header, press escape or click on overlay to close
               </Modal>{" "}
