@@ -1,22 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
-import {
-  Button,
-  Flex,
-  Container,
-  Menu,
-  Text,
-  Image,
-  Modal,
-  Group,
-} from "@mantine/core";
+import { Button, Flex, Container, Menu, Modal, Box } from "@mantine/core";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../img/logo.jpg";
-import perfume from "../../img/perfume-svgrepo-com.svg";
+import { useDisclosure } from "@mantine/hooks";
 import "../../styles/content.css";
 import { Activity } from "tabler-icons-react";
 import toast, { Toaster } from "react-hot-toast";
-import { useDisclosure } from "@mantine/hooks";
 
 export const Navbar = () => {
   const { store, context, actions } = useContext(Context);
@@ -31,7 +21,7 @@ export const Navbar = () => {
     } else {
       toast.error(store.message.text);
     }
-  }, [store.message]);
+  }, [store.message, store.token]);
 
   const handleLogout = () => {
     let response = actions.logOut();
@@ -110,16 +100,18 @@ export const Navbar = () => {
               wrap="wrap"
             >
               {" "}
-              <Button color="gray" size="xl">
-                {" "}
-                <div class="container-cart-icon">
+              <Modal opened={opened} onClose={close} withCloseButton={false}>
+                Modal without header, press escape or click on overlay to close
+              </Modal>{" "}
+              <Button color="gray" size="xl" onClick={open}>
+                <div className="container-cart-icon dropdown">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="icon-cart"
+                    className="icon-cart"
                   >
                     <path
                       stroke-linecap="round"
@@ -127,8 +119,10 @@ export const Navbar = () => {
                       d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
                     />
                   </svg>
-                  <div class="count-products">
-                    <span id="contador-productos">0</span>
+                  <div className="count-products">
+                    <span className="contador-productos">
+                      {store.carts.length}
+                    </span>
                   </div>
                 </div>
               </Button>
